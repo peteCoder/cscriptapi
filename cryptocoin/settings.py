@@ -34,7 +34,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*", '.vercel.app']
 # CSRF_TRUSTED_ORIGINS = ["*"]
 
 # Application definition
@@ -158,6 +158,8 @@ STATICFILE_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Default primary key field type
