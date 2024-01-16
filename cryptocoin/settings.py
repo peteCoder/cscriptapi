@@ -35,7 +35,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ["*", '.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ["*", '.vercel.app', '.now.sh', '.netlify.app']
 # CSRF_TRUSTED_ORIGINS = ["*"]
 
 # Application definition
@@ -56,7 +56,8 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",
-    "http://localhost"
+    "http://localhost",
+    "https://65a652bed8b898a3d13bff7e--profound-trifle-05d788.netlify.app",
 ]
 
 MIDDLEWARE = [
