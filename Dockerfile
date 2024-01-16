@@ -1,6 +1,6 @@
 # Use a specific version of Python from Docker Hub
 # Use environment variables for version management
-ARG PYTHON_VERSION=3.11.1
+ARG PYTHON_VERSION=3.10.1
 FROM python:${PYTHON_VERSION}
 
 # Set environment variables to ensure Python runs in a reproducible manner
