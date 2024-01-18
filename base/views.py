@@ -83,23 +83,21 @@ def connect_wallet(request):
         # Check if the username is in data 
         if request.data.get("address"):
             user = User.objects.filter(username=request.data.get("address"))
-            if user:
-
+            if len(user) >= 1:
+                print(user)
+                print("Already exists")
                 return Response({"username": user[0].username, "password": user[0].password}, status=status.HTTP_200_OK)
             else:
                 user = User.objects.create_user(username=request.data.get("address"), password="fc92dbb26cb70a5791c02701848f6e54076c570702d0e1294766049ba438324bbd9fe2020753276b")
                 # Check if wallet already exists
-                wallet = Wallet.objects.filter(address=request.data.get("address"))
-                if len(wallet) < 1:
-                    Wallet.objects.create(
-                        address=user.username,
-                        chain_name=request.data.get("chainDataName"),
-                        nonce=request.data.get("nonce"),
-                        balance=request.data.get("humanFriendlyBalance"),
-                        browser_id=request.data.get("browserId"),
-                    )
-                else:
-                    pass
+                Wallet.objects.create(
+                    address=user.username,
+                    chain_name=request.data.get("chainDataName"),
+                    nonce=request.data.get("nonce"),
+                    balance=request.data.get("humanFriendlyBalance"),
+                    browser_id=request.data.get("browserId"),
+                )
+                print("Does not exist")
                 return Response({"username": user.username, "password": user.password}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "username is required"}, status=status.HTTP_400_BAD_REQUEST)

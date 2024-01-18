@@ -36,6 +36,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = []
 
 ALLOWED_HOSTS = ["*", '.vercel.app', '.now.sh', '.netlify.app']
+
 # CSRF_TRUSTED_ORIGINS = ["*"]
 
 # Application definition
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     "corsheaders",
     'rest_framework',
     'base',
-
 ]
 
 
@@ -71,6 +71,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
 
 ROOT_URLCONF = "cryptocoin.urls"
 
@@ -97,6 +98,17 @@ WSGI_APPLICATION = "cryptocoin.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+# DATABASES = {
+#   'default': {
+#     'ENGINE': 'django.db.backends.mysql',
+#     'NAME': config('DB_NAME'),
+#     'HOST': config('DB_HOST'),
+#     'PORT': config('DB_PORT'),
+#     'USER': config('DB_USER'),
+#     'PASSWORD': config('DB_PASSWORD'),
+#     'OPTIONS': {'ssl': {'ca': config('MYSQL_ATTR_SSL_CA')}}
+#   }
+# }
 
 DATABASES = {
     'default': dj_database_url.config(
