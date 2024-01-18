@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",
     "http://localhost",
-    "https://65a652bed8b898a3d13bff7e--profound-trifle-05d788.netlify.app",
+    "https://65a91120f1ea3002ca0762b6--meek-paletas-62698b.netlify.app",
 ]
 
 MIDDLEWARE = [
