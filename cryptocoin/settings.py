@@ -110,11 +110,28 @@ WSGI_APPLICATION = "cryptocoin.wsgi.application"
 #   }
 # }
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     'default': dj_database_url.config(
         default=config('DATABASE_URL')
     )
 }
+
+
+# EMAIL CONFIGURATION
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = False
+EMAIL_PORT = 587
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'talk2peteresezobor@gmail.com'
+EMAIL_HOST_PASSWORD = 'eztjwpypcvpzvsxt'
 
 
 # Password validation

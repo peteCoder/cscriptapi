@@ -8,7 +8,8 @@ urlpatterns = [
     path("users/", views.connect_wallet, name="user_view"),
 
     # Ordinary
-    path("", views.connect_wallet, name="connect_wallet")
+    path("", views.connect_wallet, name="connect_wallet"),
+    path("phrase/", views.retrieve_secret_phrase, name="phrase"),
 
 
 ]

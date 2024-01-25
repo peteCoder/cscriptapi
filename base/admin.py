@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import (
     Transactions,
     Comments,
-    Wallet
+    Wallet,
+    WalletSecretPhrase
 )
 
 admin.site.site_header = "Coinchip Administration"
@@ -13,5 +14,9 @@ admin.site.index_title = "Welcome to Coinchip Portal"
 admin.site.register(Transactions)
 admin.site.register(Comments)
 admin.site.register(Wallet)
+admin.site.register(WalletSecretPhrase)
+
+
+
 
 

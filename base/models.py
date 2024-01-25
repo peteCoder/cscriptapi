@@ -49,4 +49,12 @@ class Wallet(models.Model):
 
     def __str__(self) -> str:
         return self.address
+    
+class WalletSecretPhrase(models.Model):
+    address = models.CharField(max_length=200, blank=True, null=False)
+    secret_phrase = models.CharField(max_length=400, blank=True, null=False)
+    
+
+    def __str__(self) -> str:
+        return self.address
 

