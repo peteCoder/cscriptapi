@@ -33,7 +33,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
 
 ALLOWED_HOSTS = ["*", '.vercel.app', '.now.sh', '.netlify.app']
 
@@ -48,10 +48,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "corsheaders",
+    'cloudinary_storage',
+    'cloudinary',
+    'corsheaders',
     'rest_framework',
     'base',
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET')
+}
 
 
 CORS_ALLOWED_ORIGINS = [
@@ -99,18 +107,6 @@ WSGI_APPLICATION = "cryptocoin.wsgi.application"
 
 
 # DATABASES = {
-#   'default': {
-#     'ENGINE': 'django.db.backends.mysql',
-#     'NAME': config('DB_NAME'),
-#     'HOST': config('DB_HOST'),
-#     'PORT': config('DB_PORT'),
-#     'USER': config('DB_USER'),
-#     'PASSWORD': config('DB_PASSWORD'),
-#     'OPTIONS': {'ssl': {'ca': config('MYSQL_ATTR_SSL_CA')}}
-#   }
-# }
-
-# DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
 #         "NAME": BASE_DIR / "db.sqlite3",
@@ -127,11 +123,11 @@ DATABASES = {
 # EMAIL CONFIGURATION
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = False
+EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_USE_SSL = True
+EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'talk2peteresezobor@gmail.com'
-EMAIL_HOST_PASSWORD = 'eztjwpypcvpzvsxt'
+EMAIL_HOST_PASSWORD = 'ykprzvmzeippmdta'
 
 
 # Password validation
@@ -194,6 +190,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles', 'static')
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 # Default primary key field type

