@@ -65,7 +65,7 @@ CLOUDINARY_STORAGE = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",
     "http://localhost",
-    "https://65a91120f1ea3002ca0762b6--meek-paletas-62698b.netlify.app",
+    "https://65b77f4551be0c1bcccbbbc7--fancy-souffle-f065e5.netlify.app"
 ]
 
 MIDDLEWARE = [
