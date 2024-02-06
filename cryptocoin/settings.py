@@ -65,7 +65,7 @@ CLOUDINARY_STORAGE = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",
     "http://localhost",
-    "https://benevolent-salmiakki-370d5f.netlify.app",
+    "https://scintillating-gumdrop-d331e7.netlify.app",
     
 ]
 
