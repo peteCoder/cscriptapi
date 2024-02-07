@@ -66,7 +66,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:80",
     "http://localhost",
     "https://scintillating-gumdrop-d331e7.netlify.app",
-    
+    "https://coinchip.net",
 ]
 
 MIDDLEWARE = [
